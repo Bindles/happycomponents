@@ -1,0 +1,50 @@
+<p style="color: green"><%= notice %></p>
+<h1>Components</h1>
+
+<%= @components.first.attributes.keys %>
+<% unless  @components.all? { |c| c[:name].blank? }%>
+  <%= link_to 'Name', components_path(sort_by: 'name', order: (params[:order] == 'asc' && params[:sort_by] == 'name') ? 'desc' : 'asc') %>
+<% end%>
+  <% unless  @components.all? { |c| c[:lang].blank? }%>
+  <%= link_to 'Lang', components_path(sort_by: 'lang', order: (params[:order] == 'asc' && params[:sort_by] == 'lang') ? 'desc' : 'asc') %>
+<% end%>
+<% unless  @components.all? { |c| c[:category].blank? }%>
+  <%= link_to 'category', components_path(sort_by: 'category', order: (params[:order] == 'asc' && params[:sort_by] == 'category') ? 'desc' : 'asc') %>
+<% end %>
+<br><br>
+
+<div id="components">
+  <% @components.each do |component| %>
+    <%= render component %>
+    <p>
+      <%= link_to "Inspect", inspectc_components_path(component), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
+    </p>
+  <% end %>
+</div>
+
+<!-- Selected Component Section -->
+<div id="selected-component">
+  <% if @selected_component.present? %>
+    <h2>Selected Component</h2>
+    <%= render @selected_component %>
+  <% end %>
+</div>
+
+<%= link_to "New component", new_component_path %>
+
+<!-- Add this modal at the end of your HTML body -->
+<div class="modal fade" id="inspectModal" tabindex="-1" role="dialog" aria-labelledby="inspectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inspectModalLabel">Inspect Component Code</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="inspectModalBody">
+        <!-- Content will be dynamically loaded here via AJAX -->
+      </div>
+    </div>
+  </div>
+</div>

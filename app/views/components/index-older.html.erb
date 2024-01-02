@@ -1,0 +1,33 @@
+<p style="color: green"><%= notice %></p>
+<h1>Components</h1>
+
+<%= @components.first.attributes.keys %>
+<% unless  @components.all? { |c| c[:name].blank? }%>
+  <%= link_to 'Name', components_path(sort_by: 'name', order: (params[:order] == 'asc' && params[:sort_by] == 'name') ? 'desc' : 'asc') %>
+<% end%>
+  <% unless  @components.all? { |c| c[:lang].blank? }%>
+  <%= link_to 'Lang', components_path(sort_by: 'lang', order: (params[:order] == 'asc' && params[:sort_by] == 'lang') ? 'desc' : 'asc') %>
+<% end%>
+<% unless  @components.all? { |c| c[:category].blank? }%>
+  <%= link_to 'category', components_path(sort_by: 'category', order: (params[:order] == 'asc' && params[:sort_by] == 'category') ? 'desc' : 'asc') %>
+<% end %>
+<br><br>
+
+<% @components.first.attributes.keys.each do |attr_name| %>
+  <% unless @components.all? { |c| c[attr_name].blank? } 7j%>
+    <%#= link_to attr_name.capitalize, components_path(sort_by: attr_name, order: toggle_order(attr_name)) %>
+    <%= link_to attr_name.capitalize, components_path(sort_by: attr_name, order: (params[:order] == 'asc' && params[:sort_by] == attr_name) ? 'desc' : 'asc') %>
+
+  <% end %>
+<% end %>
+
+<div id="components">
+  <% @components.each do |component| %>
+    <%= render component %>
+    <p>
+      <%= link_to "Show this component", component %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New component", new_component_path %>
