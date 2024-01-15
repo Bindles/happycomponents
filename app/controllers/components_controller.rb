@@ -3,8 +3,9 @@ class ComponentsController < ApplicationController
   
 # app/controllers/components_controller.rb
 def inspectc
-  value = flash[:my_var]
-  puts value.class.inspect
+  flash[:notice] = "Nice"
+  #value = flash[:my_var]
+  #puts value.class.inspect
   puts "ASKAJSKLAJSLKAJSLKAJS"
   puts params[:format]
   puts params[:id]
@@ -35,7 +36,7 @@ end
   end
   # GET /components/1 or /components/1.json
   def show
-    
+    flash[:notice] = "My Test"
   end
 
   # GET /components/new
