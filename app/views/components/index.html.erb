@@ -110,7 +110,9 @@
     <%= render component %>
     <p>
       <%= link_to "Show this component", component %>
+      <%# MODAL WITH HTMX%>
       <%= link_to "Inspect", inspectc_components_path(component), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
+      
       <%= link_to 'Load Pokemon TURBO tf-pokemon-list', inspectc_components_path, 
               data: { turbo_frame: 'targ' }, 
               class: 'your-other-classes-here' %>
