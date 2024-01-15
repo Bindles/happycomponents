@@ -3,6 +3,8 @@ class ComponentsController < ApplicationController
   
 # app/controllers/components_controller.rb
 def inspectc
+  value = flash[:my_var]
+  puts value.class.inspect
   puts "ASKAJSKLAJSLKAJSLKAJS"
   puts params[:format]
   puts params[:id]
@@ -13,12 +15,15 @@ def inspectc
   @selected_component = Component.find(1)
   puts @selected_component
   puts @selected_component[:name]
-    render turbo_stream: turbo_stream.append('targ', partial: 'test_partial', locals: { component: @component})
+                                      #append
+    render turbo_stream: turbo_stream.replace('targ', partial: 'test_partial', locals: { component: @component})
 
 end
 
   # GET /components or /components.json
   def index
+    @my_var = "This is an instance variable IT WORKED"
+    flash[:my_var] = @my_var
     sort_by = params[:sort_by]
     order   = params[:order]
 
