@@ -1,0 +1,109 @@
+<%# views=>index.html %>
+<p style="color: green"><%= notice %></p>
+
+
+<!-- app/views/shared/_footer.html.erb -->
+<footer class="bg-black text-white py-2">
+  <div class="container mx-auto flex justify-between items-center">
+    <div>
+      <span class="text-lg font-bold">Components</span>
+    </div>
+    <div class="flex space-x-4">
+      <a href="#" class="hover:text-gray-500">Home</a>
+      <a href="#" class="hover:text-gray-500">Code</a>
+      <a href="#" class="hover:text-gray-500">Login</a>
+    </div>
+    <div>
+      <%= form_tag(components_path, method: 'get', class: 'flex items-center') do %>
+        <%= text_field_tag :search, params[:search], placeholder: 'Search components', class: 'rounded bg-gray-800 text-white px-4 py-2 focus:outline-none focus:shadow-outline' %>
+        <%= submit_tag 'Search', class: 'ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline' %>
+      <% end %>
+    </div>
+  </div>
+</footer>
+
+
+
+<h1>Components</h1>
+  <%= turbo_frame_tag 'targ' do %>
+    <%#= render partial: 'test_partial', locals: { component: @component } %>
+  <% end %>
+
+
+
+<%= @components.first.attributes.keys %>
+<% unless  @components.all? { |c| c[:name].blank? }%>
+  <%= link_to 'Name', components_path(sort_by: 'name', order: (params[:order] == 'asc' && params[:sort_by] == 'name') ? 'desc' : 'asc') %>
+<% end%>
+  <% unless  @components.all? { |c| c[:lang].blank? }%>
+  <%= link_to 'Lang', components_path(sort_by: 'lang', order: (params[:order] == 'asc' && params[:sort_by] == 'lang') ? 'desc' : 'asc') %>
+<% end%>
+<% unless  @components.all? { |c| c[:category].blank? }%>
+  <%= link_to 'category', components_path(sort_by: 'category', order: (params[:order] == 'asc' && params[:sort_by] == 'category') ? 'desc' : 'asc') %>
+<% end %>
+<br><br>
+
+<% @components.first.attributes.keys.each do |attr_name| %>
+  <% unless @components.all? { |c| c[attr_name].blank? } %>
+    <%#= link_to attr_name.capitalize, components_path(sort_by: attr_name, order: toggle_order(attr_name)) %>
+    <%= link_to attr_name.capitalize, components_path(sort_by: attr_name, order: (params[:order] == 'asc' && params[:sort_by] == attr_name) ? 'desc' : 'asc') %>
+
+  <% end %>
+<% end %>
+
+<div id="components">
+  <% @components.each do |component| %>
+    <%= render component %>
+    <p>
+      <%= link_to "Show this component", component %>
+      <%= link_to "Inspect", inspectc_components_path(component), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
+      <%= link_to 'Load Pokemon TURBO tf-pokemon-list', inspectc_components_path, 
+              data: { turbo_frame: 'targ' }, 
+              class: 'your-other-classes-here' %>
+    </p>
+  <% end %>
+</div>
+
+<div id="color-circles">
+  <% @components.each do |component| %>
+    <div class="color-circle" hx-get="/components/<%= component.id %>" hx-swap="outerHTML">
+      <!-- Display your color circles here -->
+      <%= component.name %>
+    </div>
+  <% end %>
+</div>
+
+<div id="selected-color-name">
+  <!-- This div will be updated with the selected color's name -->
+</div>
+
+<div id="targ">
+
+</div>
+
+<!-- Selected Component Section -->
+<div id="selected-component">
+  <% if @selected_component.present? %>
+    <h2>Selected Component</h2>
+    <%= render @selected_component %>
+  <% end %>
+</div>
+
+<%= link_to "New component", new_component_path %>
+
+<!-- Add this modal at the end of your HTML body -->
+<div class="modal fade" id="inspectModal" tabindex="-1" role="dialog" aria-labelledby="inspectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inspectModalLabel">Inspect Component Code</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="inspectModalBody">
+        <!-- Content will be dynamically loaded here via AJAX -->
+      </div>
+    </div>
+  </div>
+</div>

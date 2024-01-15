@@ -3,7 +3,7 @@ class ComponentsController < ApplicationController
   
 # app/controllers/components_controller.rb
 def inspectc
-  #flash[:notice] = "Nice"
+  flash[:notice] = "Nice"
   #value = flash[:my_var]
   #puts value.class.inspect
   puts "ASKAJSKLAJSLKAJSLKAJS"
@@ -25,20 +25,14 @@ end
   def index
     @my_var = "This is an instance variable IT WORKED"
     flash[:my_var] = @my_var
-    #sort_by = params[:sort_by]
-    #order   = params[:order]
+    sort_by = params[:sort_by]
+    order   = params[:order]
 
-
-    @components = if params[:search]
-      Component.where('name LIKE ?', "%#{params[:search]}%")
+    if sort_by.present? && order.present?
+      @components = Component.all.order(sort_by => order)
     else
-      Component.all
+      @components = Component.all
     end
-
-  if params[:sort_by].present? && params[:order].present?
-  @components = @components.order(params[:sort_by] => params[:order])
-  end
-
   end
   # GET /components/1 or /components/1.json
   def show
