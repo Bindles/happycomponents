@@ -1,0 +1,79 @@
+<%# views/components=>htmxer.html %>
+
+
+
+
+<p style="color: green"><%= notice %></p>
+
+
+<h1>Color Circles</h1>
+
+<div id="htmx-links">
+  <% @components.each do |component| %>
+    <div class="eachlink" hx-get="/components/inspectc/?id=<%= component.id %>"  hx-swap="#mydiv" hx-target="#aaa">
+      <!-- Display your color circles here -->
+      <%= component.name %>
+      <a href="#" hx-get="/components/<%= component.id %>"  hx-swap="#mydiv" hx-target="#aaa">Click</a>
+      <%= link_to "Inspect", inspectc_components_path(component_id: component.id), remote: true, data: { turbo_frame: 'modalFrame', toggle: "modal", target: "#inspectModal" } %>
+
+    </div>
+  <% end %>
+</div>
+
+<div id="aaa">
+  <!-- This div will be updated with the selected color's name -->
+</div>
+
+
+<div id="inspectModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="inspectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="inspectModalLabel">Inspect Component Codezz</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalFrame">
+        <%= turbo_frame_tag 'modalFrame' do %>
+
+        <% end %>
+        <!-- Content will be dynamically loaded here via Turbo Frame -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- app/views/colors/index.html.erb -->
+<h1>Color Circles</h1>
+
+<div id="color-circles">
+  <% @components.each do |component| %>
+    <div class="color-circle" hx-get="/components/<%= component.id %>"  hx-swap="#mydiv" hx-target="#aaa">
+      <!-- Display your color circles here -->
+      <%= component.name %>
+    </div>
+  <% end %>
+</div>
+
+<div id="aaa">
+  <!-- This div will be updated with the selected color's name -->
+</div>
+
+<!-- app/views/colors/index.html.erb -->
+<h1>Color Circles</h1>
+
+<div id="color-circles">
+  <% @components.each do |component| %>
+
+      <!-- Display your color circles here -->
+      <%= component.name %>
+          <a href="#" hx-get="/components/<%= component.id %>"  hx-swap="#mydiv" hx-target="#aaa">Click</a>
+    </a>
+  <% end %>
+</div>
+
+<div id="aaa">
+  <!-- This div will be updated with the selected color's name -->
+</div>

@@ -2,8 +2,6 @@
 <p style="color: green"><%= notice %></p>
 
 
-
-
 <!-- app/views/shared/_footer.html.erb -->
 <footer class="bg-black text-white py-2">
   <div class="container mx-auto flex justify-between items-center">
@@ -116,8 +114,8 @@
     <p>
       <%= link_to "Show this component", component %>
       <%# MODAL WITH HTMX%>
-      <%= link_to "Inspect", inspectc_components_path(id: component.id), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
-      <%= link_to 'Load Inspectc turbo_frame', inspectc_components_path(id: component.id),
+      <%= link_to "Inspect", inspectc_components_path(component), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
+      <%= link_to 'Load Inspectc turbo_frame', inspectc_components_path(id: component.id), 
               data: { turbo_frame: 'targ' }, 
               class: 'your-other-classes-here' %>
 

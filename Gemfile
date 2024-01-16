@@ -65,7 +65,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
+gem 'htmx-rails'
 gem 'searchkick'
 gem 'elasticsearch'
 gem 'faker'

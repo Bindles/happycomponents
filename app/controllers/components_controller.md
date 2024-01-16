@@ -36,11 +36,7 @@ def inspectc
   puts @selected_component[:name]
                                       #append
     #render turbo_stream: turbo_stream.replace('targ', partial: 'test_partial', locals: { component: @component})
-    #render turbo_stream: turbo_stream.remove("modalFrame_#{params[:id]}")
-    render turbo_stream: turbo_stream.replace("modalFrame", partial: 'modal_content', locals: { component: @selected_component })
-    #render turbo_stream: turbo_stream.append("modalFrame", partial: 'modal_content', locals: { component: @selected_component, id: @selected_component.id })
-
-    
+    render turbo_stream: turbo_stream.replace('modalFrame', partial: 'modal_content', locals: { component: @selected_component })
 end
 
   # GET /components or /components.json

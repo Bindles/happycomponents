@@ -1,8 +1,9 @@
 <script>
   var jjj = 'hi';
 </script>
-dice job turboz
+dice job turboz <%= @selected_component[:name] %>
 <% if @selected_component %>
   <%= @selected_component.name %>
   <%= flash[:my_var] %>
 <% end %>
+

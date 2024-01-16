@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :components do
     collection do
       #get 'inspectc/:id', on: :member, action: :inspectc, as: 'inspectc'
-      get 'inspectc' => 'components#inspectc'     
+      get 'inspectc' => 'components#inspectc'
+      get 'gunparam' => 'components#gunparam' 
+      get 'htmxer'      
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -2,8 +2,6 @@
 <p style="color: green"><%= notice %></p>
 
 
-
-
 <!-- app/views/shared/_footer.html.erb -->
 <footer class="bg-black text-white py-2">
   <div class="container mx-auto flex justify-between items-center">
@@ -92,10 +90,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="inspectModalLabel">Inspect Componentz 
-        <%# <% if @component_name%> %>
-          <%= @abc %> 
-  <%#       <% end%> %> </h5>
+        <h5 class="modal-title" id="inspectModalLabel">Inspect Component Code <%= @selected_component.inspect %></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -116,21 +111,18 @@
     <p>
       <%= link_to "Show this component", component %>
       <%# MODAL WITH HTMX%>
-      <%= link_to "Inspect", inspectc_components_path(id: component.id), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
-      <%= link_to 'Load Inspectc turbo_frame', inspectc_components_path(id: component.id),
+      <%= link_to "Inspect", inspectc_components_path(component), remote: true, data: { toggle: "modal", target: "#inspectModal" } %>
+      
+      <%= link_to 'Load Pokemon TURBO tf-pokemon-list', inspectc_components_path, 
               data: { turbo_frame: 'targ' }, 
               class: 'your-other-classes-here' %>
-
-      <%= link_to "Inspect", gunparam_components_path(component_name: component.name), data: { toggle: "modal", target: "#inspectModal" } %>
     </p>
   <% end %>
 </div>
 
-<div id="replaceme"></div>
 <div id="color-circles">
   <% @components.each do |component| %>
-  AA
-    <div class="color-circle" hx-get="/components/<%= component.id %>" hx-swap="innerHTML" hx-target="#replaceme">
+    <div class="color-circle" hx-get="/components/<%= component.id %>" hx-swap="outerHTML">
       <!-- Display your color circles here -->
       <%= component.name %>
     </div>
